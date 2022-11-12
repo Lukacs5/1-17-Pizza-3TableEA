@@ -10,28 +10,45 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-<BorderPane fx:controller="">
-<top>
-    <MenuBar>
-        <Menu text="Adatbázis menü">
-            <MenuItem text="Olvasas"></MenuItem>
-            <MenuItem text="Olvasas2"></MenuItem>
-            <MenuItem text="Íras"></MenuItem>
-            <MenuItem text="Módosítás"></MenuItem>
-            <MenuItem text="Törölés"></MenuItem>
-        </Menu>
-        <Menu text="valami2">
 
-        </Menu>
-    </MenuBar>
-</top>
+<?import com.sun.javafx.scene.control.ContextMenuContent.MenuBox?>
+<BorderPane fx:controller="com.example.pizza.HelloController" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <MenuBar>
+            <Menu text="Adatbázis">
+                <MenuItem text="Olvasas"></MenuItem>
+                <MenuItem text="Olvasas2"></MenuItem>
+                <MenuItem text="Íras"></MenuItem>
+                <MenuItem text="Módosítás"></MenuItem>
+                <MenuItem text="Törölés"></MenuItem>
+            </Menu>
+            <Menu text="Rest1"></Menu>
+            <Menu text="Rest2"></Menu>
+            <Menu text="SoapKliens ">
+                <MenuItem text="Letöltés"></MenuItem>
+                <MenuItem text="Letöltés 2"></MenuItem>
+                <MenuItem text="Grafikon"></MenuItem>
+            </Menu>
+            <Menu text="Adatbányászat">
+                <MenuItem text="Döntési fa"></MenuItem>
+                <MenuItem text="Több algoritmus 1"></MenuItem>
+                <MenuItem text="Több algoritmus 2"></MenuItem>
+
+            </Menu>
+            <Menu text="Egyéb">
+                <MenuItem text="Páthuzamos almenü"></MenuItem>
+                <MenuItem text="Stream almenü"></MenuItem>
+            </Menu>
+        </MenuBar>
+    </top>
+     <center>   <VBox alignment="CENTER" spacing="20" >
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+
+            <Label fx:id="welcomeText"/>
+
+            <Button text="Üdvözlűnk a Java Előadás beadanóban" onAction="#onHelloButtonClick"/>
+        </VBox>
+    </center>
 </BorderPane>
-      <fx:controller="com.example.pizza.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
