@@ -12,43 +12,82 @@
 <?import javafx.scene.control.MenuItem?>
 
 <?import com.sun.javafx.scene.control.ContextMenuContent.MenuBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ToggleGroup?>
 <BorderPane fx:controller="com.example.pizza.HelloController" xmlns:fx="http://javafx.com/fxml">
     <top>
         <MenuBar>
             <Menu text="Adatbázis">
-                <MenuItem text="Olvasas"></MenuItem>
-                <MenuItem text="Olvasas2"></MenuItem>
-                <MenuItem text="Íras"></MenuItem>
-                <MenuItem text="Módosítás"></MenuItem>
-                <MenuItem text="Törölés"></MenuItem>
+                <MenuItem text="Olvasas" onAction="#Olvasas"/>
+                <MenuItem text="Olvasas2" onAction="#Olvasas2"/>
+                <MenuItem text="Íras"/>
+                <MenuItem text="Módosítás"/>
+                <MenuItem text="Törölés"/>
             </Menu>
-            <Menu text="Rest1"></Menu>
-            <Menu text="Rest2"></Menu>
+            <Menu text="Rest1"/>
+            <Menu text="Rest2"/>
             <Menu text="SoapKliens ">
-                <MenuItem text="Letöltés"></MenuItem>
-                <MenuItem text="Letöltés 2"></MenuItem>
-                <MenuItem text="Grafikon"></MenuItem>
+                <MenuItem text="Letöltés"/>
+                <MenuItem text="Letöltés 2"/>
+                <MenuItem text="Grafikon"/>
             </Menu>
             <Menu text="Adatbányászat">
-                <MenuItem text="Döntési fa"></MenuItem>
-                <MenuItem text="Több algoritmus 1"></MenuItem>
-                <MenuItem text="Több algoritmus 2"></MenuItem>
+                <MenuItem text="Döntési fa"/>
+                <MenuItem text="Több algoritmus 1"/>
+                <MenuItem text="Több algoritmus 2"/>
 
             </Menu>
             <Menu text="Egyéb">
-                <MenuItem text="Páthuzamos almenü"></MenuItem>
-                <MenuItem text="Stream almenü"></MenuItem>
+                <MenuItem text="Páthuzamos almenü"/>
+                <MenuItem text="Stream almenü"/>
             </Menu>
         </MenuBar>
     </top>
-     <center>   <VBox alignment="CENTER" spacing="20" >
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-            </padding>
+     <center>
+         <VBox alignment="CENTER" spacing="20" fx:id="OlvasasMenu">
+             <padding><Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/></padding>
+             <StackPane fx:id="spOlvas">
+                 <HBox>
+                     <TextField fx:id="tfOlvas"/>
+                     <ComboBox fx:id="cbOlvasas" />
+                        <VBox>
 
-            <Label fx:id="welcomeText"/>
-
-            <Button text="Üdvözlűnk a Java Előadás beadanóban" onAction="#onHelloButtonClick"/>
-        </VBox>
+                            <RadioButton text="Popey" fx:id="rbPopey" >
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="group"/>
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton text="Ráki" fx:id="rbRaki" >
+                            <toggleGroup>
+                                <fx:reference source="group"/>
+                            </toggleGroup>
+                            </RadioButton>
+                        </VBox>
+                     <CheckBox text="Vega?" fx:id="cbVega" />
+                 </HBox>
+                 <Button onAction="#Filter" text="Szűrés" />
+             </StackPane>
+             <TableView fx:id="tOlvas" >
+                 <columns>
+                     <TableColumn text="Col1" />
+                     <TableColumn text="Col2" />
+                     <TableColumn text="Col3" />
+                     <TableColumn text="Col4" />
+                     <TableColumn text="Col5" />
+                     <TableColumn text="Col6" />
+                     <TableColumn text="Col7" />
+                 </columns>
+             </TableView>
+         </VBox>
     </center>
 </BorderPane>
