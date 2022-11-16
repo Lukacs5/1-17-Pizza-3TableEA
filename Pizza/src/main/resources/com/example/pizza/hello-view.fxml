@@ -30,9 +30,9 @@
             <Menu text="Adatbázis">
                 <MenuItem text="Olvasas" onAction="#Olvasas"/>
                 <MenuItem text="Olvasas2" onAction="#Olvasas2"/>
-                <MenuItem text="Íras"/>
-                <MenuItem text="Módosítás"/>
-                <MenuItem text="Törölés"/>
+                <MenuItem text="Íras" onAction="#Insert"/>
+                <MenuItem text="Módosítás" onAction="#Update"/>
+                <MenuItem text="Törölés" onAction="#Delete"/>
             </Menu>
             <Menu text="Rest1"/>
             <Menu text="Rest2"/>
@@ -56,27 +56,51 @@
      <center>
          <VBox alignment="CENTER" spacing="20" fx:id="OlvasasMenu">
              <padding><Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/></padding>
-             <StackPane fx:id="spOlvas">
+             <VBox fx:id="vbOlvas" spacing="20">
+                 <Label>Adatbázis szűrő:</Label>
                  <HBox>
-                     <TextField fx:id="tfOlvas"/>
-                     <ComboBox fx:id="cbOlvasas" />
+                    <HBox> <Label>ID:</Label> <TextField fx:id="tfOlvas"/></HBox>
+                    <HBox> <Label>Kategória:</Label> <ComboBox fx:id="cbOlvasas" /></HBox>
                         <VBox>
-
                             <RadioButton text="Popey" fx:id="rbPopey" >
                                 <toggleGroup>
                                     <ToggleGroup fx:id="group"/>
                                 </toggleGroup>
                             </RadioButton>
                             <RadioButton text="Ráki" fx:id="rbRaki" >
-                            <toggleGroup>
-                                <fx:reference source="group"/>
-                            </toggleGroup>
+                                <toggleGroup>
+                                    <fx:reference source="group"/>
+                                </toggleGroup>
                             </RadioButton>
                         </VBox>
-                     <CheckBox text="Vega?" fx:id="cbVega" />
+                        <CheckBox text="Vega?" fx:id="cbVega" />
                  </HBox>
                  <Button onAction="#Filter" text="Szűrés" />
-             </StackPane>
+             </VBox>
+             <VBox fx:id="vbInsert" spacing="20">
+                 <Label>Pizza beszúrása:</Label>
+                 <VBox>
+                     <HBox> <Label>PizzaNev:</Label> <TextField fx:id="tfInsertPizzaNev"/></HBox>
+                     <HBox> <Label>KategoriaNev:</Label> <ComboBox fx:id="cbInsertKategoriaNev" /></HBox>
+                     <HBox> <CheckBox text="Vega?" fx:id="tfInsertVega" /></HBox>
+                     <Button text="Beszúrás" onAction="#InsertToTable"/>
+                 </VBox>
+
+             </VBox>
+             <VBox fx:id="vbUpdate"  spacing="20">
+                 <Label>Kategória módosítása:</Label>
+                 <ComboBox fx:id="cbShowKateg" onAction="#ShowUpdate" />
+             </VBox>
+             <VBox fx:id="vbShowUpdate">
+                 <HBox> <Label>Kategória név::</Label> <TextField fx:id="tfUpdateKategNev"/></HBox>
+                 <HBox> <Label>Ár:</Label> <TextField fx:id="tfupdateKategAr" /></HBox>
+                 <Button text="Módosítás" onAction="#UpdateKateg"/>
+             </VBox>
+             <VBox fx:id="vbDelete">
+                 <Label>Pizza törlése:</Label>
+                 <ComboBox fx:id="cbShowPizza" />
+                 <Button text="Törlés" onAction="#DeletePizza"/>
+             </VBox>
              <TableView fx:id="tOlvas" >
                  <columns>
                      <TableColumn text="Col1" />

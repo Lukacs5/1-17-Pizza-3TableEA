@@ -51,5 +51,67 @@ public class Adatbazis {
             return null;
         }
     }
-
+    public kategoria getKategoria(String nev)
+    {
+        try {
+            Statement st = cn.createStatement();
+            ResultSet res = st.executeQuery("SELECT * FROM kategoria Where kategoria.nev = +'"+nev+"'");
+            res.next();
+            String kategNev = res.getString("nev");
+            int kategAr = res.getInt("ar");
+            kategoria re = new kategoria(kategNev,kategAr);
+            return re;
+            }
+            catch (SQLException ex) {
+            System.out.println(ex);
+            return null;
+            }
+    }
+    public ArrayList<String> getPizza()
+    {
+        try {
+            ArrayList<String> list = new ArrayList<>();
+            Statement st = cn.createStatement();
+            ResultSet res = st.executeQuery("SELECT nev FROM pizza");
+            while (res.next())
+            {
+                String pizzaNev = res.getString("nev");
+                list.add(pizzaNev);
+            }
+            return list;
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+    public void InsertPizza(String pNev,String kNev, boolean vega) {
+        int help;
+        if(vega) help = 1;
+        else help = 0;
+        try {
+            Statement st = cn.createStatement();
+            st.execute("Insert into pizza Values ('"+pNev+"','"+kNev+"',"+ help +")");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void UpdateKateg(kategoria a) {
+        try {
+            Statement st = cn.createStatement();
+            st.execute( "UPDATE kategoria" +
+                            " SET nev = '"+a.getNev()+"', ar= "+a.getAr()+"" +
+                            " WHERE nev = '"+a.getNev()+"'");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    public void DeletePizza(String a) {
+        try {
+            Statement st = cn.createStatement();
+            st.execute( "DELETE FROM pizza WHERE nev ='" + a + "'");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
