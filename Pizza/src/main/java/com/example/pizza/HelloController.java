@@ -1,11 +1,14 @@
 package com.example.pizza;
 
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HelloController {
@@ -19,6 +22,13 @@ public class HelloController {
     public VBox vbUpdate;
     public VBox vbShowUpdate;
     public VBox vbDelete;
+    public VBox vbRest1Get;
+    public VBox vbRest1;
+    public HBox mainCucc;
+
+    public VBox vbRest1Post;
+
+    public TableView tRest1Get;
     //Gombok mütyürkék:
     public ComboBox cbOlvasas;
     public TextField tfOlvas;
@@ -33,6 +43,13 @@ public class HelloController {
     public TextField tfUpdateKategNev;
     public TextField tfupdateKategAr;
     public ComboBox cbShowPizza;
+    //POST
+    public TextField tfRest1PostId;
+    public ComboBox tfRest1PostStatus;
+    public ComboBox tfRest1PostGender;
+    public TextField tfRest1PostEmail;
+    public TextField tfRest1PostName;
+    public Label lResponseRest1Post;
     //Táblázat cuccok
     @FXML private TableColumn<osszRendeles, String> az;
     @FXML private TableColumn<osszRendeles, String> darab;
@@ -42,13 +59,17 @@ public class HelloController {
     @FXML private TableColumn<osszRendeles, String> felvetel;
     @FXML private TableColumn<osszRendeles, String> kiszallitas;
     @FXML private TableColumn<osszRendeles, String> vega;
+    @FXML private TableColumn<RestUser, String> RestUserid;
+    @FXML private TableColumn<RestUser, String> RestUserName;
+    @FXML private TableColumn<RestUser, String> RestUserEmail;
+    @FXML private TableColumn<RestUser, String> RestUserGender;
+    @FXML private TableColumn<RestUser, String> RestStatus;
     String url = "jdbc:mysql://localhost/pizzatabla?user=root";
     Adatbazis dataBase = new Adatbazis(url);
-
     ArrayList<String> kategoriak = dataBase.Kategoriak();
     public void Clear()
     {
-        OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
+        mainCucc.getChildren().removeAll(mainCucc.getChildren());
         cbShowKateg.setDisable(false);
     }
     public void Mutat(String a)
@@ -57,26 +78,54 @@ public class HelloController {
         switch (a)
         {
             case "OlvasMenu":
-                OlvasasMenu.getChildren().addAll(tOlvas);
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
+                OlvasasMenu.getChildren().add(tOlvas);
                 break;
             case "Olvas2Menu":
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
                 OlvasasMenu.getChildren().addAll(vbOlvas,tOlvas);
                 break;
             case "Insert":
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
+                cbInsertKategoriaNev.getItems().removeAll(cbInsertKategoriaNev.getItems());
                 cbInsertKategoriaNev.getItems().addAll(dataBase.Kategoriak());
                 OlvasasMenu.getChildren().addAll(vbInsert);
                 break;
             case "Update":
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
+                cbShowKateg.getItems().removeAll(cbShowKateg.getItems());
                 cbShowKateg.getItems().addAll(dataBase.Kategoriak());
                 OlvasasMenu.getChildren().addAll(vbUpdate);
                 break;
             case "ShowUpdate":
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
                 OlvasasMenu.getChildren().addAll(vbUpdate,vbShowUpdate);
                 break;
             case "Delete":
-
+                mainCucc.getChildren().add(OlvasasMenu);
+                OlvasasMenu.getChildren().removeAll(OlvasasMenu.getChildren());
+                cbShowPizza.getItems().removeAll(cbShowPizza.getItems());
                 cbShowPizza.getItems().addAll(dataBase.getPizza());
                 OlvasasMenu.getChildren().addAll(vbDelete);
+                break;
+            case "Rest1Get":
+                mainCucc.getChildren().add(vbRest1);
+                vbRest1.getChildren().removeAll(vbRest1.getChildren());
+                vbRest1.getChildren().addAll(vbRest1Get);
+                break;
+            case "Rest1Post":
+                mainCucc.getChildren().add(vbRest1);
+                vbRest1.getChildren().removeAll(vbRest1.getChildren());
+                tfRest1PostStatus.getItems().removeAll(tfRest1PostStatus.getItems());
+                tfRest1PostGender.getItems().removeAll(tfRest1PostGender.getItems());
+                tfRest1PostGender.getItems().addAll("male","female");
+                tfRest1PostStatus.getItems().addAll("active","inactive");
+                vbRest1.getChildren().addAll(vbRest1Post);
                 break;
         }
     }
@@ -194,7 +243,6 @@ public class HelloController {
         Mutat("");
     }
 
-
     public void Update(ActionEvent actionEvent) {
         Mutat("Update");
     }
@@ -228,5 +276,41 @@ public class HelloController {
         dataBase.DeletePizza(dPizza);
         cbShowPizza.getItems().removeAll(cbShowPizza.getItems());
         Mutat("Delete");
+    }
+
+    public void Rest1Get(ActionEvent actionEvent) throws IOException {
+        Mutat("Rest1Get");
+        Rest1Tabla();
+
+    }
+    public void Rest1Tabla() throws IOException {
+            RestUser[] user = RestKliens.GET();
+
+            tRest1Get.getItems().removeAll(tRest1Get.getItems());
+            tRest1Get.getColumns().removeAll(tRest1Get.getColumns());
+
+            RestUserid = new TableColumn("RestUserid");
+            RestUserName = new TableColumn("RestUserName");
+            RestUserEmail = new TableColumn("RestUserEmail");
+            RestUserGender = new TableColumn("RestUserGender");
+            RestStatus = new TableColumn("RestStatus");
+
+            tRest1Get.getColumns().addAll(RestUserid, RestUserName,RestUserEmail,RestUserGender,RestStatus);
+
+            RestUserid.setCellValueFactory(new PropertyValueFactory<>("id"));
+            RestUserName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            RestUserEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+            RestUserGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+            RestStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+            tRest1Get.getItems().addAll(user);
+    }
+    public void Rest1Post(ActionEvent actionEvent) {
+        Mutat("Rest1Post");
+    }
+
+    public void Rest1PostDo(ActionEvent actionEvent) throws IOException {
+        RestUser user = new RestUser(Integer.parseInt(tfRest1PostId.getText()),tfRest1PostName.getText(),tfRest1PostEmail.getText(),tfRest1PostGender.getSelectionModel().getSelectedItem().toString(),tfRest1PostStatus.getSelectionModel().getSelectedItem().toString());
+        lResponseRest1Post.setText("Válasz:" + RestKliens.POST(user));
     }
 }
