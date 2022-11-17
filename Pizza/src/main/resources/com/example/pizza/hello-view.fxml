@@ -37,8 +37,8 @@
             <Menu text="Rest1">
                 <MenuItem text="Get" onAction="#Rest1Get" />
                 <MenuItem text="Post" onAction="#Rest1Post"/>
-                <MenuItem text="Update" />
-                <MenuItem text="Delete" />
+                <MenuItem text="Delete" onAction="#Rest1Delete"/>
+                <MenuItem text="Update" onAction="#Rest1Update"/>
             </Menu>
             <Menu text="Rest2"/>
             <Menu text="SoapKliens ">
@@ -108,10 +108,10 @@
                  <TableView fx:id="tOlvas" />
              </VBox>
              <VBox fx:id="vbRest1">
-                 <VBox fx:id="vbRest1Get">
+                 <VBox fx:id="vbRest1Get" spacing="10">
                      <TableView fx:id="tRest1Get" minWidth="880" />
                  </VBox>
-                 <VBox fx:id="vbRest1Post" spacing="20">
+                 <VBox fx:id="vbRest1Post" spacing="10">
                      <Label>Rest beszúrása:</Label>
                      <VBox>
                          <HBox> <Label>Id:</Label> <TextField fx:id="tfRest1PostId"/></HBox>
@@ -122,6 +122,20 @@
                          <Button text="Post" onAction="#Rest1PostDo"/>
                          <HBox> <Label fx:id="lResponseRest1Post"/></HBox>
                      </VBox>
+                 </VBox>
+                 <VBox fx:id="vbRest1Delete" spacing="10">
+                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest1Delete" /></HBox>
+                     <Button text="Delete" onAction="#DoRest1Delete" />
+                     <HBox> <Label fx:id="lDeleted"/> </HBox>
+                 </VBox>
+                 <VBox fx:id="vbRest1Update" spacing="10">
+                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest1UpdateId" /></HBox>
+                     <HBox> <Label>Name:</Label> <TextField fx:id="tfRest1UpdateName" /></HBox>
+                     <HBox> <Label>Email:</Label> <TextField fx:id="tfRest1UpdateEmail" /></HBox>
+                     <HBox> <Label>Gender:</Label> <ComboBox fx:id="cbRest1UpdateGender" /></HBox>
+                     <HBox> <Label>Status:</Label> <ComboBox fx:id="cbRest1UpdateStatus" /></HBox>
+                     <Button text="Update" onAction="#DoRest1Update" />
+                     <HBox> <Label fx:id="lUpdated"/> </HBox>
                  </VBox>
              </VBox>
          </HBox>

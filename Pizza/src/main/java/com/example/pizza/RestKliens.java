@@ -2,9 +2,8 @@ package com.example.pizza;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+
 import com.google.gson.Gson;
 
 public class    RestKliens {
@@ -40,9 +39,11 @@ public class    RestKliens {
             in.close();
         } else {
             System.out.println("Hiba!!!");
+            return "Hiba!";
         }
 
         connection.disconnect();
+        System.out.println(jsonResponseData.toString());
         return jsonResponseData.toString();
     }
 
@@ -86,10 +87,10 @@ public class    RestKliens {
         return seged3(201);
     }
 
-    static void PUT(RestUser tagok) throws IOException {
+    static String PUT(RestUser tagok) throws IOException {
         System.out.println("\nPUT...");
         URL usersUrl = new URL(url);
-        String url = "https://gorest.co.in/public/v2/users/" + tagok.getId();
+        String url = "https://gorest.co.in/public/v2/users/" + tagok.getId() + "?access-token=336ac269fd5abc610b4de1d779127b223cb9dbf7078eed498a82a7a48abdf140";
         URL postUrl = new URL(url);
         connection = (HttpsURLConnection) postUrl.openConnection();
         connection.setRequestMethod("PUT");
@@ -97,17 +98,17 @@ public class    RestKliens {
         seged1();
         String params = tagok.toString();
         seged2(params);
-        //seged3(200);
+        return seged3(200);
     }
 
-    static void DELETE(String ID) throws IOException {
+    static String DELETE(String ID) throws IOException {
         System.out.println("\nDELETE...");
-        String url = "https://gorest.co.in/public/v2/users/" + ID;
+        String url = "https://gorest.co.in/public/v2/users/" + ID + "?access-token=336ac269fd5abc610b4de1d779127b223cb9dbf7078eed498a82a7a48abdf140";
         URL postUrl = new URL(url);
         connection = (HttpsURLConnection) postUrl.openConnection();
         connection.setRequestMethod("DELETE");
         seged1();
-        //seged3(204);
-    }/**/
+        return seged3(204);
+    }
 
 }
