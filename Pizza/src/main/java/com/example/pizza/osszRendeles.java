@@ -79,4 +79,16 @@ public class osszRendeles {
     public void setVega(boolean vega) {
         this.vega = vega;
     }
+
+    @Override
+    public String toString() {
+        return "" + az +
+                "," + darab +
+                "," + ar +
+                "," + pizzanev +
+                "," + kategorianev +
+                "," + felvetel +
+                "," + kiszallitas +
+                "," + vega;
+    }
 }

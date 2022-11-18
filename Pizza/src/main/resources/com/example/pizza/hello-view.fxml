@@ -52,8 +52,8 @@
                 <MenuItem text="Több algoritmus 2"/>
             </Menu>
             <Menu text="Egyéb">
-                <MenuItem text="Páthuzamos almenü"/>
-                <MenuItem text="Stream almenü"/>
+                <MenuItem text="Páthuzamos almenü" onAction="#Parhuzamos"/>
+                <MenuItem text="Stream almenü" onAction="#Stream"/>
             </Menu>
         </MenuBar>
     </top>
@@ -136,6 +136,40 @@
                      <HBox> <Label>Status:</Label> <ComboBox fx:id="cbRest1UpdateStatus" /></HBox>
                      <Button text="Update" onAction="#DoRest1Update" />
                      <HBox> <Label fx:id="lUpdated"/> </HBox>
+                 </VBox>
+             </VBox>
+             <VBox fx:id="vbEgyeb">
+                 <VBox fx:id="vbParhuzamos" spacing="10">
+                     <HBox> <Label>Nyomj meg:</Label> <Button fx:id="bParhuzamos" text="Gomb" onAction="#DoAThing"/></HBox>
+                     <HBox> <Label>Label1:</Label> <Label fx:id="lParhuzamos1"/></HBox>
+                     <HBox> <Label>label2:</Label> <Label fx:id="lParhuzamos2"/></HBox>
+                 </VBox>
+                 <VBox fx:id="vbStream" spacing="10">
+                     <Label>Adatbázis szűrő:</Label>
+                     <HBox>
+                             <HBox> <Label>ID:</Label> <TextField fx:id="tfStreamId"/></HBox>
+                             <HBox> <Label>Kategória:</Label> <ComboBox fx:id="cbStreamkateg" /></HBox>
+                             <VBox>
+                                 <RadioButton text="Popey">
+                                     <toggleGroup>
+                                         <ToggleGroup fx:id="group1"/>
+                                     </toggleGroup>
+                                 </RadioButton>
+                                 <RadioButton text="Ráki" >
+                                     <toggleGroup>
+                                         <fx:reference source="group1"/>
+                                     </toggleGroup>
+                                 </RadioButton>
+                                 <RadioButton text="Semmi"  >
+                                 <toggleGroup>
+                                     <fx:reference source="group1"/>
+                                 </toggleGroup>
+                                </RadioButton>
+                             </VBox>
+                             <CheckBox text="Vega?" fx:id="cbStreamVega" />
+                         </HBox>
+                     <Button onAction="#FilterStream" text="Szűrés" />
+                     <TableView fx:id="tStream" />
                  </VBox>
              </VBox>
          </HBox>

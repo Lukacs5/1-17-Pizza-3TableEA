@@ -1,15 +1,27 @@
 package com.example.pizza;
 
 import com.google.gson.Gson;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.lang.Boolean.parseBoolean;
 
 public class HelloController {
 
@@ -25,7 +37,8 @@ public class HelloController {
     public VBox vbRest1Get;
     public VBox vbRest1;
     public HBox mainCucc;
-
+    public VBox vbEgyeb;
+    public VBox vbParhuzamos;
     public VBox vbRest1Post;
 
     public TableView tRest1Get;
@@ -61,6 +74,17 @@ public class HelloController {
     public TextField tfRest1UpdateEmail;
     public ComboBox cbRest1UpdateGender;
     public ComboBox cbRest1UpdateStatus;
+    public Button bParhuzamos;
+    public Label lParhuzamos1;
+    public Label lParhuzamos2;
+    public TextField tfStreamId;
+    public ComboBox cbStreamkateg;
+    public VBox vbStream;
+    public RadioButton rbStreamPopey;
+    public RadioButton rbStreamRaki;
+    public CheckBox cbStreamVega;
+    public TableView tStream;
+    public ToggleGroup group1;
     //Táblázat cuccok
     @FXML private TableColumn<osszRendeles, String> az;
     @FXML private TableColumn<osszRendeles, String> darab;
@@ -151,6 +175,16 @@ public class HelloController {
                 cbRest1UpdateGender.getItems().addAll("male","female");
                 cbRest1UpdateStatus.getItems().addAll("active","inactive");
                 vbRest1.getChildren().addAll(vbRest1Update);
+                break;
+            case "Parhuzamos":
+                mainCucc.getChildren().add(vbEgyeb);
+                vbEgyeb.getChildren().removeAll(vbEgyeb.getChildren());
+                vbEgyeb.getChildren().addAll(vbParhuzamos);
+                break;
+            case "Stream":
+                mainCucc.getChildren().add(vbEgyeb);
+                vbEgyeb.getChildren().removeAll(vbEgyeb.getChildren());
+                vbEgyeb.getChildren().addAll(vbStream);
                 break;
         }
     }
@@ -337,5 +371,114 @@ public class HelloController {
         RestUser user = new RestUser(Integer.parseInt(tfRest1UpdateId.getText()),tfRest1UpdateName.getText(),tfRest1UpdateEmail.getText(),cbRest1UpdateGender.getSelectionModel().getSelectedItem().toString(),cbRest1UpdateStatus.getSelectionModel().getSelectedItem().toString());
         if(RestKliens.PUT(user) == "Hiba!") lUpdated.setText("Az id nem megfelelő vagy az email foglalt.");
         else lUpdated.setText("Sikeres");
+    }
+    public void Parhuzamos(ActionEvent actionEvent) {
+        Mutat("Parhuzamos");
+    }
+    public void DoAThing(ActionEvent actionEvent)
+    {
+        Thread thread1 = new Thread(() -> {
+            try {
+                while(true)
+                {
+                    Platform.runLater(() -> lParhuzamos1.setText("Alma"));
+                    Thread.sleep(2000);
+                    Platform.runLater(() -> lParhuzamos1.setText(""));
+                    Thread.sleep(2000);
+                }
+            }
+            catch (Exception exc) {
+                // should not be able to get here...
+                throw new Error("Unexpected interruption");
+            }
+        });
+        thread1.start();
+        Thread thread2 = new Thread(() -> {
+            try {
+                while (true)
+                {
+                    Platform.runLater(() -> lParhuzamos2.setText("Korte"));
+                    Thread.sleep(3000);
+                    Platform.runLater(() -> lParhuzamos2.setText(""));
+                    Thread.sleep(3000);
+                }
+            }
+            catch (Exception exc) {
+                // should not be able to get here...
+                throw new Error("Unexpected interruption");
+            }
+        });
+        thread2.start();
+    }
+    public void Stream(ActionEvent actionEvent) {
+        Mutat("Stream");
+        cbStreamkateg.getItems().removeAll(cbStreamkateg.getItems());
+        cbStreamkateg.getItems().add(null);
+        cbStreamkateg.getItems().addAll(kategoriak);
+    }
+    public void FilterStream(ActionEvent actionEvent) {
+        ArrayList<osszRendeles> rend = dataBase.Rendelesek("");
+        ArrayList<String> AdatB = new ArrayList<>();
+        for(int i =0; i < rend.size(); i++)
+        {
+            AdatB.add(rend.get(i).toString());
+        }
+        String le ="";
+        if(!tfStreamId.getText().isEmpty())
+        {
+            le +="^"+tfStreamId.getText()+",.*";
+        }
+        if(group1.getSelectedToggle() != null )
+        {
+            RadioButton selectedRadioButton = (RadioButton) group1.getSelectedToggle();
+            String toogleGroupValue = selectedRadioButton.getText();
+            if(!toogleGroupValue.equals("Semmi")){ le += ".*," + toogleGroupValue + ",.*";}
+        }
+        if(cbStreamkateg.getSelectionModel().getSelectedItem() != null) {
+            le += ".*" + cbStreamkateg.getSelectionModel().getSelectedItem() + ",.*";
+        }
+
+        if(cbStreamVega.isSelected())
+        {
+            le+= "true$" ;
+
+        }
+        Pattern pattern = Pattern.compile(le);
+
+        List<String> matching = AdatB.stream()
+                .filter(pattern.asPredicate())
+                .collect(Collectors.toList());
+
+        ArrayList<osszRendeles> StreamRned = new ArrayList<>();
+        for(int i = 0 ; i < matching.size(); i++)
+        {
+            String a[] = matching.get(i).split(",");
+            osszRendeles b = new osszRendeles(Integer.parseInt(a[0]),Integer.parseInt(a[1]),Integer.parseInt(a[2]),a[3],a[4],a[5],a[6],parseBoolean(a[7]));
+            StreamRned.add(b);
+        }
+        tStream.getItems().removeAll(tStream.getItems());
+        tStream.getColumns().removeAll(tStream.getColumns());
+
+        az = new TableColumn("Id");
+        darab = new TableColumn("db");
+        ar = new TableColumn("Ár");
+        pizzanev = new TableColumn("PizzaNév");
+        kategorianev = new TableColumn("KategóriaNév");
+        felvetel = new TableColumn("Felvetel");
+        kiszallitas = new TableColumn("kiszallitas");
+        vega = new TableColumn("vega");
+
+        tStream.getColumns().addAll(az, darab,ar,pizzanev,kategorianev,felvetel,kiszallitas,vega);
+
+        az.setCellValueFactory(new PropertyValueFactory<>("az"));
+        darab.setCellValueFactory(new PropertyValueFactory<>("darab"));
+        ar.setCellValueFactory(new PropertyValueFactory<>("ar"));
+        pizzanev.setCellValueFactory(new PropertyValueFactory<>("pizzanev"));
+        kategorianev.setCellValueFactory(new PropertyValueFactory<>("kategorianev"));
+        felvetel.setCellValueFactory(new PropertyValueFactory<>("felvetel"));
+        kiszallitas.setCellValueFactory(new PropertyValueFactory<>("kiszallitas"));
+        vega.setCellValueFactory(new PropertyValueFactory<>("vega"));
+
+        tStream.getItems().addAll(StreamRned);
     }
 }
