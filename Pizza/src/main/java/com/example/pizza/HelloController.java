@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.lang.Boolean.parseBoolean;
-
 public class HelloController {
 
 
@@ -67,24 +66,41 @@ public class HelloController {
     public VBox vbRest1Delete;
     public Label lDeleted;
     public VBox vbRest1Update;
-    public TextField tfRest1Update;
     public Label lUpdated;
     public TextField tfRest1UpdateId;
     public TextField tfRest1UpdateName;
     public TextField tfRest1UpdateEmail;
     public ComboBox cbRest1UpdateGender;
     public ComboBox cbRest1UpdateStatus;
+    public TextField tfRest2PostId;
+    public ComboBox tfRest2PostStatus;
+    public ComboBox tfRest2PostGender;
+    public TextField tfRest2PostEmail;
+    public TextField tfRest2PostName;
+    public Label lResponseRest2Post;
+    public TextField tfRest2Delete;
+    public VBox vbRest2Delete;
+    public Label lDeleted2;
+    public VBox vbRest2Update;
+    public Label lUpdated2;
+    public TextField tfRest2UpdateId;
+    public TextField tfRest2UpdateName;
+    public TextField tfRest2UpdateEmail;
+    public ComboBox cbRest2UpdateGender;
+    public ComboBox cbRest2UpdateStatus;
     public Button bParhuzamos;
     public Label lParhuzamos1;
     public Label lParhuzamos2;
     public TextField tfStreamId;
     public ComboBox cbStreamkateg;
     public VBox vbStream;
-    public RadioButton rbStreamPopey;
-    public RadioButton rbStreamRaki;
     public CheckBox cbStreamVega;
     public TableView tStream;
     public ToggleGroup group1;
+    public VBox vbRest2Post;
+    public TableView tRest2Get;
+    public VBox vbRest2Get;
+    public VBox vbRest2;
     //Táblázat cuccok
     @FXML private TableColumn<osszRendeles, String> az;
     @FXML private TableColumn<osszRendeles, String> darab;
@@ -152,6 +168,10 @@ public class HelloController {
                 mainCucc.getChildren().add(vbRest1);
                 vbRest1.getChildren().removeAll(vbRest1.getChildren());
                 vbRest1.getChildren().addAll(vbRest1Get);
+            case "Rest2Get":
+                mainCucc.getChildren().add(vbRest2);
+                vbRest2.getChildren().removeAll(vbRest2.getChildren());
+                vbRest2.getChildren().addAll(vbRest2Get);
                 break;
             case "Rest1Post":
                 mainCucc.getChildren().add(vbRest1);
@@ -162,10 +182,20 @@ public class HelloController {
                 tfRest1PostStatus.getItems().addAll("active","inactive");
                 vbRest1.getChildren().addAll(vbRest1Post);
                 break;
+            case "Rest2Post":
+                mainCucc.getChildren().add(vbRest2);
+                vbRest2.getChildren().removeAll(vbRest2.getChildren());
+                vbRest2.getChildren().addAll(vbRest2Post);
+                break;
             case "Rest1Delete":
                 mainCucc.getChildren().add(vbRest1);
                 vbRest1.getChildren().removeAll(vbRest1.getChildren());
                 vbRest1.getChildren().addAll(vbRest1Delete);
+                break;
+            case "Rest2Delete":
+                mainCucc.getChildren().add(vbRest2);
+                vbRest2.getChildren().removeAll(vbRest2.getChildren());
+                vbRest2.getChildren().addAll(vbRest2Delete);
                 break;
             case "Rest1Update":
                 mainCucc.getChildren().add(vbRest1);
@@ -175,6 +205,15 @@ public class HelloController {
                 cbRest1UpdateGender.getItems().addAll("male","female");
                 cbRest1UpdateStatus.getItems().addAll("active","inactive");
                 vbRest1.getChildren().addAll(vbRest1Update);
+                break;
+            case "Rest2Update":
+                mainCucc.getChildren().add(vbRest2);
+                vbRest2.getChildren().removeAll(vbRest2.getChildren());
+                cbRest2UpdateGender.getItems().removeAll(cbRest2UpdateGender.getItems());
+                cbRest2UpdateStatus.getItems().removeAll(cbRest2UpdateStatus.getItems());
+                cbRest2UpdateGender.getItems().addAll("male","female");
+                cbRest2UpdateStatus.getItems().addAll("active","inactive");
+                vbRest2.getChildren().addAll(vbRest2Update);
                 break;
             case "Parhuzamos":
                 mainCucc.getChildren().add(vbEgyeb);
@@ -334,7 +373,7 @@ public class HelloController {
     public void Rest1Tabla() throws IOException {
             tRest1Get.getItems().removeAll(tRest1Get.getItems());
             tRest1Get.getColumns().removeAll(tRest1Get.getColumns());
-            RestUser[] user = RestKliens.GET();
+            RestUser[] user = RestKliens.GET("https://gorest.co.in/public/v2/users");
 
             RestUserid = new TableColumn("RestUserid");
             RestUserName = new TableColumn("RestUserName");
@@ -357,19 +396,19 @@ public class HelloController {
     }
     public void Rest1PostDo(ActionEvent actionEvent) throws IOException {
         RestUser user = new RestUser(Integer.parseInt(tfRest1PostId.getText()),tfRest1PostName.getText(),tfRest1PostEmail.getText(),tfRest1PostGender.getSelectionModel().getSelectedItem().toString(),tfRest1PostStatus.getSelectionModel().getSelectedItem().toString());
-        lResponseRest1Post.setText("Válasz:" + RestKliens.POST(user));
+        lResponseRest1Post.setText("Válasz:" + RestKliens.POST(user,"https://gorest.co.in/public/v2/users?access-token=336ac269fd5abc610b4de1d779127b223cb9dbf7078eed498a82a7a48abdf140"));
     }
     public void Rest1Delete(ActionEvent actionEvent) { Mutat("Rest1Delete"); }
     public void DoRest1Delete(ActionEvent actionEvent) throws IOException {
         String id = tfRest1Delete.getText();
-        String re = RestKliens.DELETE(id);
+        String re = RestKliens.DELETE("https://gorest.co.in/public/v2/users/"+id+"?access-token=336ac269fd5abc610b4de1d779127b223cb9dbf7078eed498a82a7a48abdf140");
         if(re == "Hiba!") lDeleted.setText("Hiba, nincs ilyen id!");
         else  lDeleted.setText("Sikeres törlés!");
     }
     public void Rest1Update(ActionEvent actionEvent) { Mutat("Rest1Update"); }
     public void DoRest1Update(ActionEvent actionEvent) throws IOException {
         RestUser user = new RestUser(Integer.parseInt(tfRest1UpdateId.getText()),tfRest1UpdateName.getText(),tfRest1UpdateEmail.getText(),cbRest1UpdateGender.getSelectionModel().getSelectedItem().toString(),cbRest1UpdateStatus.getSelectionModel().getSelectedItem().toString());
-        if(RestKliens.PUT(user) == "Hiba!") lUpdated.setText("Az id nem megfelelő vagy az email foglalt.");
+        if(RestKliens.PUT(user,"https://gorest.co.in/public/v2/users/"+user.getId()+"?access-token=336ac269fd5abc610b4de1d779127b223cb9dbf7078eed498a82a7a48abdf140") == "Hiba!") lUpdated.setText("Az id nem megfelelő vagy az email foglalt.");
         else lUpdated.setText("Sikeres");
     }
     public void Parhuzamos(ActionEvent actionEvent) {
@@ -481,4 +520,48 @@ public class HelloController {
 
         tStream.getItems().addAll(StreamRned);
     }
+
+    public void Rest2Get(ActionEvent actionEvent) throws IOException {
+        Mutat("Rest2Get");
+        Rest2Tabla();
+    }
+    public void Rest2Tabla() throws IOException {
+        tRest2Get.getItems().removeAll(tRest2Get.getItems());
+        tRest2Get.getColumns().removeAll(tRest2Get.getColumns());
+        pizza[] pizza = AzureRestKliens.GET("http://20.13.128.109:8080/api");
+
+        TableColumn RestPNev = new TableColumn("RestPNev");
+        TableColumn RestKNev = new TableColumn("RestKNev");
+        TableColumn RestVega = new TableColumn("RestVega");
+
+        tRest2Get.getColumns().addAll(RestPNev,RestKNev,RestVega);
+
+        RestPNev.setCellValueFactory(new PropertyValueFactory<>("nev"));
+        RestKNev.setCellValueFactory(new PropertyValueFactory<>("knev"));
+        RestVega.setCellValueFactory(new PropertyValueFactory<>("vega"));
+
+        tRest2Get.getItems().addAll(pizza);
+    }
+
+    public void Rest2Post(ActionEvent actionEvent) {
+        Mutat("Rest2Post");
+    }
+    public void Rest2PostDo(ActionEvent actionEvent) throws IOException {
+        pizza Pizza = new pizza(tfRest2PostId.getText(),tfRest2PostName.getText(),tfRest2PostEmail.getText());
+        lResponseRest2Post.setText("Válasz:" + AzureRestKliens.POST(Pizza,"http://20.13.128.109:8080/api"));
+    }
+    public void Rest2Delete(ActionEvent actionEvent) {
+        Mutat("Rest2Delete");
+    }
+    public void DoRest2Delete(ActionEvent actionEvent) throws IOException {
+        String nev = tfRest2Delete.getText();
+        String re = AzureRestKliens.DELETE("http://20.13.128.109:8080/api/"+nev);
+        if(re == "Hiba!") lDeleted.setText("Hiba, nincs ilyen id!");
+        else  lDeleted.setText("Sikeres törlés!");
+    }
+    public void Rest2Update(ActionEvent actionEvent) {
+        Mutat("Rest2Update");
+    }
+
+
 }

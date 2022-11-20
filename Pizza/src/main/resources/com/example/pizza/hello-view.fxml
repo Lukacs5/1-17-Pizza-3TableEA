@@ -40,7 +40,12 @@
                 <MenuItem text="Delete" onAction="#Rest1Delete"/>
                 <MenuItem text="Update" onAction="#Rest1Update"/>
             </Menu>
-            <Menu text="Rest2"/>
+            <Menu text="Rest2">
+                <MenuItem text="Get" onAction="#Rest2Get" />
+                <MenuItem text="Post" onAction="#Rest2Post"/>
+                <MenuItem text="Delete" onAction="#Rest2Delete"/>
+                <MenuItem text="Update" onAction="#Rest2Update"/>
+            </Menu>
             <Menu text="SoapKliens ">
                 <MenuItem text="Letöltés"/>
                 <MenuItem text="Letöltés 2"/>
@@ -136,6 +141,33 @@
                      <HBox> <Label>Status:</Label> <ComboBox fx:id="cbRest1UpdateStatus" /></HBox>
                      <Button text="Update" onAction="#DoRest1Update" />
                      <HBox> <Label fx:id="lUpdated"/> </HBox>
+                 </VBox>
+             </VBox>
+             <VBox fx:id="vbRest2">
+                 <VBox fx:id="vbRest2Get" spacing="10">
+                     <TableView fx:id="tRest2Get" minWidth="880" />
+                 </VBox>
+                 <VBox fx:id="vbRest2Post" spacing="10">
+                     <Label>Rest beszúrása:</Label>
+                     <VBox>
+                         <HBox> <Label>Id:</Label> <TextField fx:id="tfRest2PostId"/></HBox>
+                         <HBox> <Label>Name:</Label> <TextField fx:id="tfRest2PostName"/></HBox>
+                         <HBox> <Label>Email:</Label> <TextField fx:id="tfRest2PostEmail" /></HBox>
+                         <Button text="Post" onAction="#Rest2PostDo"/>
+                         <HBox> <Label fx:id="lResponseRest2Post"/></HBox>
+                     </VBox>
+                 </VBox>
+                 <VBox fx:id="vbRest2Delete" spacing="10">
+                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest2Delete" /></HBox>
+                     <Button text="Delete" onAction="#DoRest2Delete" />
+                     <HBox> <Label fx:id="lDeleted2"/> </HBox>
+                 </VBox>
+                 <VBox fx:id="vbRest2Update" spacing="10">
+                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest2UpdateId" /></HBox>
+                     <HBox> <Label>Name:</Label> <TextField fx:id="tfRest2UpdateName" /></HBox>
+                     <HBox> <Label>Email:</Label> <TextField fx:id="tfRest2UpdateEmail" /></HBox>
+                     <Button text="Update" onAction="#DoRest1Update" />
+                     <HBox> <Label fx:id="lUpdated2"/> </HBox>
                  </VBox>
              </VBox>
              <VBox fx:id="vbEgyeb">
