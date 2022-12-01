@@ -150,22 +150,22 @@
                  <VBox fx:id="vbRest2Post" spacing="10">
                      <Label>Rest beszúrása:</Label>
                      <VBox>
-                         <HBox> <Label>Id:</Label> <TextField fx:id="tfRest2PostId"/></HBox>
-                         <HBox> <Label>Name:</Label> <TextField fx:id="tfRest2PostName"/></HBox>
-                         <HBox> <Label>Email:</Label> <TextField fx:id="tfRest2PostEmail" /></HBox>
+                         <HBox> <Label>Név:</Label> <TextField fx:id="tfRest2PostId"/></HBox>
+                         <HBox> <Label>Kategória név:</Label> <TextField fx:id="tfRest2PostName"/></HBox>
+                         <HBox> <Label>Vega:</Label> <TextField fx:id="tfRest2PostEmail" /></HBox>
                          <Button text="Post" onAction="#Rest2PostDo"/>
                          <HBox> <Label fx:id="lResponseRest2Post"/></HBox>
                      </VBox>
                  </VBox>
                  <VBox fx:id="vbRest2Delete" spacing="10">
-                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest2Delete" /></HBox>
+                     <HBox> <Label>Név:</Label> <TextField fx:id="tfRest2Delete" /></HBox>
                      <Button text="Delete" onAction="#DoRest2Delete" />
                      <HBox> <Label fx:id="lDeleted2"/> </HBox>
                  </VBox>
                  <VBox fx:id="vbRest2Update" spacing="10">
-                     <HBox> <Label>ID:</Label> <TextField fx:id="tfRest2UpdateId" /></HBox>
-                     <HBox> <Label>Name:</Label> <TextField fx:id="tfRest2UpdateName" /></HBox>
-                     <HBox> <Label>Email:</Label> <TextField fx:id="tfRest2UpdateEmail" /></HBox>
+                     <HBox> <Label>Név:</Label> <TextField fx:id="tfRest2UpdateId" /></HBox>
+                     <HBox> <Label>Kategória név:</Label> <TextField fx:id="tfRest2UpdateName" /></HBox>
+                     <HBox> <Label>Vega:</Label> <TextField fx:id="tfRest2UpdateEmail" /></HBox>
                      <Button text="Update" onAction="#DoRest1Update" />
                      <HBox> <Label fx:id="lUpdated2"/> </HBox>
                  </VBox>
