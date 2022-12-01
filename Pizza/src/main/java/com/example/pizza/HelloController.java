@@ -528,7 +528,7 @@ public class HelloController {
     public void Rest2Tabla() throws IOException {
         tRest2Get.getItems().removeAll(tRest2Get.getItems());
         tRest2Get.getColumns().removeAll(tRest2Get.getColumns());
-        pizza[] pizza = AzureRestKliens.GET("http://20.13.128.109:8080/api");
+        pizza[] pizza = AzureRestKliens.GET("http://kecskemetpizza.asuscomm.com:8080/api");
 
         TableColumn RestPNev = new TableColumn("RestPNev");
         TableColumn RestKNev = new TableColumn("RestKNev");
@@ -548,14 +548,14 @@ public class HelloController {
     }
     public void Rest2PostDo(ActionEvent actionEvent) throws IOException {
         pizza Pizza = new pizza(tfRest2PostId.getText(),tfRest2PostName.getText(),tfRest2PostEmail.getText());
-        lResponseRest2Post.setText("Válasz:" + AzureRestKliens.POST(Pizza,"http://20.13.128.109:8080/api"));
+        lResponseRest2Post.setText("Válasz:" + AzureRestKliens.POST(Pizza,"http://kecskemetpizza.asuscomm.com:8080/api"));
     }
     public void Rest2Delete(ActionEvent actionEvent) {
         Mutat("Rest2Delete");
     }
     public void DoRest2Delete(ActionEvent actionEvent) throws IOException {
         String nev = tfRest2Delete.getText();
-        String re = AzureRestKliens.DELETE("http://20.13.128.109:8080/api/"+nev);
+        String re = AzureRestKliens.DELETE("http://kecskemetpizza.asuscomm.com:8080/api/"+nev);
         if(re == "Hiba!") lDeleted.setText("Hiba, nincs ilyen id!");
         else  lDeleted.setText("Sikeres törlés!");
     }
