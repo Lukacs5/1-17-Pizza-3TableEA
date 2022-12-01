@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Pizza:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Pizza_jar</output-path>
+    <root id="archive" name="Pizza.jar">
+      <element id="module-output" name="Pizza" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/19-ea+7/javafx-controls-19-ea+7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19-ea+7/javafx-graphics-19-ea+7-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/19-ea+7/javafx-controls-19-ea+7-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/19-ea+7/javafx-base-19-ea+7-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19-ea+7/javafx-graphics-19-ea+7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/19-ea+7/javafx-base-19-ea+7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/19-ea+7/javafx-fxml-19-ea+7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/19-ea+7/javafx-fxml-19-ea+7-win.jar" path-in-jar="/" />
+      <element id="dir-copy" path="C:/Program Files/Java/jdk-19/bin" />
+    </root>
+  </artifact>
+</component>

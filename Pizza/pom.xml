@@ -61,6 +61,7 @@
                 <configuration>
                     <source>19</source>
                     <target>19</target>
+
                 </configuration>
             </plugin>
             <plugin>
@@ -72,6 +73,13 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>lib/</classpathPrefix>
+                                    <mainClass>com.example.pizza</mainClass>
+                                </manifest>
+                            </archive>
                             <mainClass>com.example.pizza/com.example.pizza.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
